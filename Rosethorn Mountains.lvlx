@@ -2,9 +2,9 @@ HEAD
 TL:"Rosethorn Mountains";CPID:"SMBX2";
 HEAD_END
 SECTION
-SC:0;L:-200000;R:-183168;T:-200600;B:-200000;MZ:24;MF:"Mountain Showdown.ogg";BG:39;
-SC:1;L:-180000;R:-179200;T:-184320;B:-180000;MZ:24;MF:"Mountain Showdown.ogg";BG:39;
-SC:2;L:-160000;R:-144480;T:-160600;B:-160000;MZ:24;MF:"Mountain Showdown.ogg";BG:29;
+SC:0;L:-200000;R:-183168;T:-200600;B:-200000;MZ:24;MF:"Showdown at the Rosethorn Mountains.ogg";BG:39;
+SC:1;L:-180000;R:-179200;T:-184320;B:-180000;MZ:24;MF:"Showdown at the Rosethorn Mountains.ogg";BG:39;
+SC:2;L:-160000;R:-144480;T:-160600;B:-160000;MZ:24;MF:"Showdown at the Rosethorn Mountains.ogg";BG:29;
 SC:3;L:-140000;R:-139200;T:-140600;B:-140000;MZ:24;MF:"Stickerbush Symphony.ogg";BG:31;
 SC:4;L:-120000;R:-117664;T:-121152;B:-120000;MZ:0;MF:"";BG:29;
 SC:9;L:-20000;R:-19200;T:-20600;B:-20000;MZ:0;MF:"";BG:0;
