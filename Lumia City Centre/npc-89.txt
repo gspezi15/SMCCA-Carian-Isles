@@ -1,0 +1,4 @@
+gfxwidth=32
+gfxheight=48
+speed=0
+name="Inkspitter"

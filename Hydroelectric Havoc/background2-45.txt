@@ -1,0 +1,6 @@
+[bg]
+img="wall2.png"
+depth=150
+repeatX=true
+repeatY=true
+alignY=BOTTOM

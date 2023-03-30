@@ -1,0 +1,11 @@
+[montana]
+img="montana.png"
+depth=300
+repeatX=true
+alignY=BOTTOM
+
+[trees]
+img="trees.png"
+depth=100
+repeatX=true
+alignY=BOTTOM

@@ -1,0 +1,5 @@
+[1]
+import=AI_ARC
+variants=6
+frames=1
+speedX=0

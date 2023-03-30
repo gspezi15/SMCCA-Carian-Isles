@@ -1,0 +1,1 @@
+{"pixel_scale": "1", "tiles": [{"x1": 0, "y1": 96, "x2": 32, "y2": 128, "tile_id": "515", "grid_size": [16, 16], "assigned_id": 515}, {"x1": 32, "y1": 96, "x2": 64, "y2": 128, "tile_id": "513", "grid_size": [16, 16], "assigned_id": 513}, {"x1": 64, "y1": 96, "x2": 96, "y2": 128, "tile_id": "533", "grid_size": [16, 16], "assigned_id": 533}]}

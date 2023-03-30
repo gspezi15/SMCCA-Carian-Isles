@@ -1,0 +1,10 @@
+nogravity = true
+noblockcollision = true
+jumphurt = true
+nohurt = true
+isvine = true
+width=16
+gfxwidth=32
+gfxheight=32
+noiceball = true
+noyoshi = true

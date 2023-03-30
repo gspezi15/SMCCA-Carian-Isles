@@ -1,0 +1,15 @@
+{
+	"style" : "groupbox",
+	"title" : "Dorrie Settings",
+	"layout": [
+
+{
+			"control": "checkbox",
+			"name": "startStill",
+			"title": "Begin Still?",
+			"tooltip": "If checked, the NPC will only start moving once the player lands on it.",
+			"text-visible": true,
+			"value-default": false
+		}
+		]
+}

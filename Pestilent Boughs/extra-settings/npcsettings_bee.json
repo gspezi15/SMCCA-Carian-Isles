@@ -1,0 +1,32 @@
+{
+	"style" : "groupbox",
+	"title" : "Bee Settings",
+	"layout": [
+		{
+			"control": "checkbox",
+			"name": "moveInstant",
+			"title": "Move Instantly",
+			"tooltip": "If checked, the bee will start moving instantly.",
+			"text-visible": false,
+			"value-default": false
+		},
+		{
+			"control": "checkbox",
+			"name": "isSpawner",
+			"title": "Is this a spawner?",
+			"tooltip": "If checked, a pair of eyes will appear at the center of the tile and will periodically spawn bees.",
+			"text-visible": false,
+			"value-default": false
+		},
+		{
+			"control": "spinBox",
+			"name": "spawnTime",
+			"type": "int",
+			"title": "Spawn Time",
+			"tooltip": "How long should the NPC wait until spawning a bee, in frames?",
+			"value-default": 150,
+			"value-min": 0,
+			"value-max": 1000
+		}
+	]
+}

@@ -1,0 +1,6 @@
+[bg]
+img="wl4_fridge_unfrozen.png"
+depth=150
+repeatX=true
+repeatY=true
+alignY=BOTTOM

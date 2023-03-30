@@ -1,0 +1,13 @@
+[backpipes]
+img="backpipes.png"
+depth=150
+repeatX=true
+alignY=BOTTOM
+repeatY=true
+
+[forepipes]
+img="forepipes.png"
+depth=100
+repeatX=true
+alignY=BOTTOM
+repeatY=true

@@ -1,0 +1,16 @@
+fill-color=0x7B6931
+
+[Layer 1]
+depth=400
+img="bg2_35_layer4.png"
+repeatX=false
+repeatY=true
+alignY=BOTTOM
+fitX=true
+
+[treezone]
+img="treezonelayer.png"
+depth=200
+repeatX=true
+repeatY=true
+alignY=BOTTOM

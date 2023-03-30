@@ -1,0 +1,66 @@
+{
+	"style": "groupbox",
+	"title": "Balance Platform - Settings",
+	"layout": [
+		{
+			"control": "spinBox",
+			"type": "int",
+			"name": "width",
+			"title": "Hor. Length",
+			"value-default": 0,
+			"value-min": 96,
+			"value-max": 999,
+			"single-step": 1
+		},
+		{
+			"control": "spinBox",
+			"type": "int",
+			"name": "len",
+			"title": "Ver. Length",
+			"value-default": 0,
+			"value-min": 96,
+			"value-max": 999,
+			"single-step": 1
+		},
+		{
+			"control": "combobox",
+			"name": "activeLineguide",
+			"title": "Start Active on Lineguide",
+			"tooltip": "If 'No', the platform won't start moving on lineguide until a player holds onto it.",
+			"elements": ["Yes", "No"],
+			"value-default": 0
+		},
+		{
+			"control": "checkbox",
+			"name": "noBreak",
+			"title": "Don't Break?",
+			"tooltip": "Should platforms keep still instead of falling?",
+			"text-visible": false,
+			"value-default": false
+		},	
+		{
+			"control": "checkbox",
+			"name": "respawn",
+			"title": "Respawn?",
+			"tooltip": "Should platforms respawn after falling out?",
+			"text-visible": false,
+			"value-default": false
+		},	
+		{
+			"control": "checkbox",
+			"name": "despawn",
+			"title": "Despawn?",
+			"tooltip": "Should platforms disappear forever after falling out?",
+			"text-visible": true,
+			"value-default": true
+		},
+		{
+			"control": "checkbox",
+			"name": "noSaving",
+			"title": "Don't save properties?",
+			"tooltip": "Should platforms disappear forever after despawning?",
+			"text-visible": false,
+			"value-default": false
+		}		
+	]
+}

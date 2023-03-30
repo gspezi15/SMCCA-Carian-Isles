@@ -1,0 +1,1 @@
+AI for Noko Bombette and SML2 Bomb taken from Basegame Bombshell Koopa and Bombshell Bomb. (NPCs 578 and 579.)

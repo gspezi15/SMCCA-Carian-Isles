@@ -1,0 +1,4 @@
+gfxwidth=64
+gfxheight=72
+width=62
+gridalign=1

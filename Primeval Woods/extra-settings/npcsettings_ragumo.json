@@ -1,0 +1,14 @@
+{
+	"style" : "groupbox",
+	"title" : "Ragumo Settings",
+	"layout": [
+		{
+			"control": "checkbox",
+			"name": "spawnAbove",
+			"title": "Spawn Above Ground",
+			"tooltip": "If checked, the mole will start above ground.",
+			"text-visible": false,
+			"value-default": false
+		}
+	]
+}

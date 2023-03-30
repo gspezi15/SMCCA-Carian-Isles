@@ -1,0 +1,12 @@
+[sky]
+img="clouds.png"
+depth=400
+repeatX=true
+alignY=BOTTOM
+speedX=0.2
+
+[trees]
+img="trees.png"
+depth=100
+repeatX=true
+alignY=BOTTOM

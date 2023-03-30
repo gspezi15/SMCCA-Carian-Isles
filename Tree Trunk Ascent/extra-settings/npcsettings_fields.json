@@ -1,0 +1,192 @@
+{
+	"style" : "groupbox",
+	"title" : "Field Settings",
+	"layout": [
+		{
+			"control": "combobox",
+			"name": "fieldtype",
+			"title": "Field type",
+			"elements": ["Sap", "Space", "Zero-G"],
+			"value-default": 0
+		},
+		{
+			"control": "description",
+			"name": "_description",
+			"title": "Note",
+			"text": "\nBecause I can't make setting files that change depending on what's chosen above, each of the field type's customizable settings will be divided into separate groups below.\n"
+		},
+		{
+			"control": "group",
+			"name": "sap",
+			"title": "Sap Settings",
+			"children": [
+				{
+					"control": "spinBox",
+					"type": "double",
+					"name": "yspeedmult",
+					"title" : "Vertical speed multiplier",
+					"tooltip": "By what factor should the vertical speed be multiplied when falling through the sap?\nHigher values mean faster falling, lower values mean slower falling.\nDefault is 0.8.\nCan't go below 0 or above 1.",
+					"value-default": 0.8,
+					"value-min": 0,
+					"value-max": 1
+				},
+				{
+					"control": "spinBox",
+					"type": "double",
+					"name": "xspeedmult",
+					"title" : "Horizontal speed multiplier",
+					"tooltip": "By what factor should the horizontal speed be multiplied when walking through the sap?\nHigher values mean faster speed, lower values mean slower speed.\nDefault is 0.9.\nCan't go below 0 or above 1.",
+					"value-default": 0.9,
+					"value-min": 0,
+					"value-max": 1
+				},
+				{
+					"control": "spinBox",
+					"type": "double",
+					"name": "swimforce",
+					"title" : "Swim vertical speed",
+					"tooltip": "What speed should the player have when swimming in sap?\nDefault is 6.",
+					"value-default": 6,
+					"value-min": 0,
+					"value-max": 100
+				},
+				{
+					"control": "spinBox",
+					"type": "int",
+					"name": "timer",
+					"title" : "Linger time",
+					"tooltip": "How much should the player linger inside of the sap before they start falling?\nDefault is 40 ticks.",
+					"value-default": 40,
+					"value-min": 1,
+					"value-max": 640
+				},
+				{
+					"control": "lineEdit",
+					"name": "soundname",
+					"title" : "Swim sound",
+					"tooltip": "The name of the sound played when the player swims in sap.\nAlso works with custom sound files, placed in either the level or episode folder.\nDefault is 'swim'.",
+					"value-default": "swim",
+					"max-length": 99999
+				}
+			]
+		},
+		{
+			"control": "group",
+			"name": "space",
+			"title": "Space Settings",
+			"children": [
+				{
+					"control": "spinBox",
+					"type": "double",
+					"name": "maxupspeed",
+					"title" : "Maximum upwards velocity",
+					"tooltip": "The maximum upwards velocity for this field.\nDefaults to 4.",
+					"value-default": 4,
+					"value-min": 0,
+					"value-max": 16
+				},
+				{
+					"control": "spinBox",
+					"type": "double",
+					"name": "maxdownspeed",
+					"title" : "Maximum downwards velocity",
+					"tooltip": "The maximum downwards velocity for this field.\nDefaults to 4.",
+					"value-default": 4,
+					"value-min": 0,
+					"value-max": 16
+				},
+				{
+					"control": "spinBox",
+					"type": "int",
+					"name": "jumptime",
+					"title" : "Jump time",
+					"tooltip": "The amount of ticks the player can hold the jump button and keep jumping.\nDefaults to 40.",
+					"value-default": 40,
+					"value-min": 1,
+					"value-max": 640
+				},
+				{
+					"control": "checkBox",
+					"name": "infinitejumptime",
+					"title" : "Infinite jump time",
+					"tooltip": "Allow infinite jump time?\nIf set to true, 'Jump time' is ignored.\nDefaults to false.",
+					"value-default": false
+				},
+				{
+					"control": "checkBox",
+					"name": "canmidair",
+					"title" : "Allow jumping in midair",
+					"tooltip": "Allow midair jumping inside of the field?\nDefaults to false.",
+					"value-default": false
+				},
+				{
+					"control": "checkBox",
+					"name": "canspin",
+					"title" : "Allow spin jump",
+					"tooltip": "Allow spin jumping inside of the field?\nDefaults to true.",
+					"value-default": true
+				},
+				{
+					"control": "lineEdit",
+					"name": "jumpsound",
+					"title" : "Jump sound",
+					"tooltip": "The sound to play when the player jumps inside of the field.\nDefaults to 'player-jump'.",
+					"value-default": "player-jump",
+					"max-length": 99999
+				},
+				{
+					"control": "lineEdit",
+					"name": "spinsound",
+					"title" : "Spin jump sound",
+					"tooltip": "The sound to play when the player spinjumps inside of the field.\nNever plays if 'Allow spin jump' is disabled.\nDefaults to 'tail' because apparently that's the spinjump sound :(.",
+					"value-default": "tail",
+					"max-length": 99999
+				}
+			]
+		},
+		{
+			"control": "group",
+			"name": "zerog",
+			"title": "Zero-G Settings",
+			"children": [
+				{
+					"control": "spinBox",
+					"type": "double",
+					"name": "yspeed",
+					"title" : "Upwards acceleration",
+					"tooltip": "How much acceleration does the player get while holding jump in the zero-g zone?\nNote that it's applied every tick.\nDefaults to 0.4.",
+					"value-default": 0.4,
+					"value-min": 0,
+					"value-max": 16
+				},
+				{
+					"control": "spinBox",
+					"type": "double",
+					"name": "maxupspeed",
+					"title" : "Maximum upwards velocity",
+					"tooltip": "The maximum upwards velocity for this field.\nDefaults to 8.",
+					"value-default": 8,
+					"value-min": 0,
+					"value-max": 16
+				},
+				{
+					"control": "spinBox",
+					"type": "double",
+					"name": "maxdownspeed",
+					"title" : "Maximum downwards velocity",
+					"tooltip": "The maximum downwards velocity for this field.\nDefaults to 8.",
+					"value-default": 8,
+					"value-min": 0,
+					"value-max": 16
+				}
+			]
+		},
+		{
+			"control": "group",
+			"name": "_TEMPLATE",
+			"title": "TEMPLATE",
+			"children": [
+			]
+		}
+	]
+}

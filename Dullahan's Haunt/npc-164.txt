@@ -1,0 +1,7 @@
+gfxwidth=96
+gfxheight=96
+width=64
+height=72
+playerblocktop=0
+jumphurt=0
+speed=2

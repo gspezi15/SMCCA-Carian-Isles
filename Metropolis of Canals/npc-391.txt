@@ -1,0 +1,3 @@
+height=32
+gfxheight=32
+playerblocktop=1

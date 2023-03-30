@@ -1,0 +1,13 @@
+[stars]
+img="background2-29.png"
+depth=INFINITE
+repeatX=2
+alignY=BOTTOM
+frames=4
+
+[clouds]
+img="clouds2.png"
+depth=400
+repeatX=true
+alignY=BOTTOM
+speedX=-0.2

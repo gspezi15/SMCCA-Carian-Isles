@@ -1,0 +1,24 @@
+{
+	"style" : "groupbox",
+	"title" : "Heavy Zed Settings",
+	"layout": [
+		{
+			"control": "spinBox",
+			"name": "speed",
+			"type": "double",
+			"title": "Speed",
+			"tooltip": "The speed in which Heavy Zed moves.",
+			"value-default": 1,
+			"single-step": 0.5,
+			"value-min": 0,
+			"value-max": 20
+		},
+		{
+			"control": "combobox",
+			"name": "behaviour",
+			"title": "Heavy Zed's Behaviour",
+			"elements": ["Redirector normal", "Move when stood on"],
+			"value-default": 0
+		}
+	]
+}

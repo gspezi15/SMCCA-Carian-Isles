@@ -1,0 +1,11 @@
+gfxwidth=32
+gfxheight=36
+width=32
+height=32
+score=4
+noyoshi=1
+noiceball=1
+frames=4
+framespeed=4
+framestyle=1
+name="Goombeetle"

@@ -1,0 +1,19 @@
+[Layer1]
+name="Pipe 2"
+img=bg_pipe2.png
+alignX=LEFT
+alignY=BOTTOM
+depth=100
+parallaxY=1
+repeatX=true
+repeatY=true
+
+[Layer2]
+name="Pipe 1"
+img=bg_pipe1.png
+alignX=LEFT
+alignY=BOTTOM
+depth=50
+parallaxY=1
+repeatX=true
+repeatY=true
