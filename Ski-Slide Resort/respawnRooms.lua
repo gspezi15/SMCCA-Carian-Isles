@@ -10,6 +10,7 @@
 local playerManager = require("playerManager")
 
 local bettereffects = require("game/bettereffects")
+local blockutils = require("blocks/blockutils")
 local switchcolors = require("switchcolors")
 local lineguide = require("lineguide")
 
@@ -941,7 +942,7 @@ do
         player.forcedTimer = 0
         player.deathTimer = 0
 
-        player.powerup = PLAYER_SMALL
+        player.powerup = respawnRooms.respawnSettings.respawnPowerup
         player.mount = MOUNT_NONE
 
         player:mem(0x16,FIELD_WORD,1) -- Hearts
@@ -1074,6 +1075,8 @@ do
 
         clearLevel()
         addStuffFromLevel()
+
+        blockutils.resolveSwitchQueue()
 
 
         -- Trigger events
@@ -1476,6 +1479,10 @@ do
     end
 
     function roomInstanceFuncs:restrictPlayer()
+        if player.deathTimer > 0 or player:mem(0x13C,FIELD_BOOL) or player.forcedState ~= FORCEDSTATE_NONE then
+            return
+        end
+
         local pushedHorizontally = false
         local pushedVertically = false
 
@@ -2037,7 +2044,7 @@ do
 
     stateFuncs[respawnRooms.RESPAWN_STATE.INACTIVE] = function()
         -- If the player's not dead, don't care
-        if player.deathTimer <= 0 then
+        if player.deathTimer <= 0 or not respawnRooms.respawnSettings.enabled then
             respawnRooms.respawnTimer = 0
             return
         end
@@ -2511,8 +2518,11 @@ respawnRooms.respawnSettings = {
     -- If true, quick respawn will be enabled. When the player dies, there will be a brief transition and the level will reset without a loading screen.
     enabled = false,
 
+    -- Powerup that the player will have when respawning.
+    respawnPowerup = PLAYER_SMALL,
+
     -- If true, respawn BGO's will never be used, and the actual start point/checkpoints will be used instead.
-    neverUseRespawnBGOs = true,
+    neverUseRespawnBGOs = false,
     -- The directions of each respawn BGO.
     respawnBGODirections = {
         [851] = DIR_RIGHT,
