@@ -1,5 +1,4 @@
 local areaNames = require("areanames")
-local respawnRooms = require("respawnRooms")
 
 --Change this in your lua file to have automatically appearing messages on section switch for specific sections:
 areaNames.sectionNames = {
