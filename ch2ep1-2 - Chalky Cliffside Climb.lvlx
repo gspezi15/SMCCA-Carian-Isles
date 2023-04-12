@@ -5,6 +5,7 @@ SECTION
 SC:0;L:-200000;R:-189024;T:-204608;B:-200000;MZ:24;MF:"Ascending the White Cliffs.spc";BG:39;
 SC:1;L:-180000;R:-165184;T:-180600;B:-180000;MZ:24;MF:"Collapsing Cliffs.mp3";BG:54;XTRA:"{\n    \"effects\"\: {\n        \"weather\"\: 1\n    }\n}\n";
 SC:2;L:-160000;R:-158816;T:-160600;B:-160000;MZ:24;MF:"Charming Clifftop County.ogg";BG:32;XTRA:"{\n    \"effects\"\: {\n        \"weather\"\: 1\n    }\n}\n";
+SC:3;L:-140000;R:-139200;T:-140600;B:-140000;MZ:0;MF:"";BG:0;
 SECTION_END
 STARTPOINT
 ID:1;X:-199836;Y:-200214;D:1;
