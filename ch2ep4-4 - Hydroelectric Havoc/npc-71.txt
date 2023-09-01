@@ -1,0 +1,5 @@
+gfxwidth=56
+gfxheight=72
+speed=0
+nogravity=1
+frames=3

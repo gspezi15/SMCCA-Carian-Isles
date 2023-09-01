@@ -1,0 +1,117 @@
+{
+	"style" : "groupbox",
+	"title" : "Thunder Lakitu Settings",
+	"layout": [	
+		{
+			"control": "spinBox",
+			"type": "double",
+			"name": "speed",
+			"title": "Normal Movement Speed",
+			"tooltip": "Movement speed for when the Thunder Lakitu is floating.",
+			"value-default": 2.5,
+			"value-min": 0.0,
+			"value-max": 20,
+			"single-step": 0.5
+		},
+		{
+			"control": "spinBox",
+			"type": "int",
+			"name": "stompedDelay",
+			"title": "Delay After Stomp",
+			"value-default": 90,
+			"value-min": 1,
+			"value-max": 1000,
+			"single-step": 1
+		},
+		{
+			"control": "spinBox",
+			"type": "int",
+			"name": "harmDelay",
+			"title": "Harm Delay",
+			"value-default": 90,
+			"value-min": 1,
+			"value-max": 1000,
+			"single-step": 1
+		},
+		{
+			"control": "spinBox",
+			"type": "int",
+			"name": "spawnDelay",
+			"title": "Delay Before Spawning",
+			"value-default": 85,
+			"value-min": 1,
+			"value-max": 1000,
+			"single-step": 1
+		},
+		{
+			"control": "spinBox",
+			"type": "int",
+			"name": "delay",
+			"title": "Delay Before Stomp",
+			"value-default": 300,
+			"value-min": 1,
+			"value-max": 1000,
+			"single-step": 1
+		},
+		{
+			"control": "spinBox",
+			"type": "double",
+			"name": "amplitude",
+			"title": "Amplitude Delay",
+			"value-default": 6,
+			"value-min": 0,
+			"value-max": 1000,
+			"single-step": 0.5
+		},
+		{
+			"control": "spinBox",
+			"type": "int",
+			"name": "amplitudeDelay",
+			"title": "Amplitude",
+			"value-default": 12,
+			"value-min": 0,
+			"value-max": 1000,
+			"single-step": 1
+		},
+		{
+			"control": "spinBox",
+			"type": "double",
+			"name": "amplitudeRate",
+			"title": "Amplitde Rate",
+			"value-default": 3.5,
+			"value-min": 0.0,
+			"value-max": 100,
+			"single-step": 0.5
+		},
+		{
+			"control": "spinBox",
+			"type": "int",
+			"name": "hp",
+			"title": "Health",
+			"value-default": 20,
+			"value-min": 1,
+			"value-max": 1000,
+			"single-step": 1
+		},
+		{
+			"control": "spinBox",
+			"type": "int",
+			"name": "thunderID",
+			"title": "NPC to spawn when floating",
+			"value-default": 874,
+			"value-min": 1,
+			"value-max": 1000,
+			"single-step": 1
+		},
+		{
+			"control": "spinBox",
+			"type": "int",
+			"name": "shockwaveID",
+			"title": "NPC to spawn when stomping",
+			"value-default": 875,
+			"value-min": 1,
+			"value-max": 1000,
+			"single-step": 1
+		}
+		]
+}

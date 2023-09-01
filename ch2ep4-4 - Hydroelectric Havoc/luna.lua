@@ -25,6 +25,10 @@ areaNames.sectionNames = {
         [20] = ""
 }
 
+function onLoadSection1()
+triggerEvent("light on")
+end
+
 function onEvent(eventname)
 	if eventname == "Musicchange" then
 		Audio.MusicChange (0, "13 Serious Trouble!.ogg")
