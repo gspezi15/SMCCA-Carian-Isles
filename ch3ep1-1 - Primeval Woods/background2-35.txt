@@ -10,6 +10,14 @@ depth=500
 repeatX=true
 alignY=BOTTOM 
 
+
+[fartrees]
+img="fartrees.png"
+depth=450
+repeatX=true
+alignY=BOTTOM
+
+
 [backtrees]
 img="backtrees.png"
 depth=350
