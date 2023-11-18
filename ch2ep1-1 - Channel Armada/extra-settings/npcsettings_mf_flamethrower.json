@@ -1,0 +1,97 @@
+{
+	"style" : "groupbox",
+	"title" : "Flame Thrower Settings",
+	"layout": [
+		{
+			"control": "spinBox",
+			"name": "timerInit",
+			"type": "int",
+			"title": "Timer Initial Value",
+			"tooltip": "The initial value for the timer. Useful for offsetting multiple flamethrowers with the same duration.",
+			"value-default": 0,
+			"value-min": 0,
+			"value-max": 1200
+		},
+		{
+			"control": "spinBox",
+			"name": "idleTimer",
+			"type": "int",
+			"title": "Idle Duration",
+			"tooltip": "How long should the Flame Thrower wait before firing? In ticks.",
+			"value-default": 120,
+			"value-min": 1,
+			"value-max": 1200
+		},
+		{
+			"control": "spinBox",
+			"name": "shootTimer",
+			"type": "int",
+			"title": "Fire Duration",
+			"tooltip": "How long should the Flame Thrower fire? In ticks.",
+			"value-default": 120,
+			"value-min": 1,
+			"value-max": 1200
+		},
+		{
+			"control": "spinBox",
+			"name": "fireInterval",
+			"type": "int",
+			"title": "Fire Interval",
+			"tooltip": "How many ticks does it take for the next fire to be spawned?",
+			"value-default": 4,
+			"value-min": 1,
+			"value-max": 1200
+		},
+		{
+			"control": "group",
+			"name": "flameSettings",
+			"title": "Flame Settings",
+			"children": [{
+					"control": "checkBox",
+					"name": "rotate",
+					"title" : "Rotate?",
+					"tooltip": "Should the flames rotate?",
+					"value-default": true
+				},
+				{
+					"control": "spinBox",
+					"type": "double",
+					"name": "rotateSpeed",
+					"title" : "Rotation speed multiplier",
+					"tooltip": "A multiplier for the rotation speed of the flame.",
+					"value-default": 1,
+					"value-min": 0.1,
+					"value-max": 360
+				},
+				{
+					"control": "checkBox",
+					"name": "randomRot",
+					"title" : "Random rotation?",
+					"tooltip": "Should the flames spawn with a random rotation?",
+					"value-default": false
+				},
+				{
+					"control": "checkBox",
+					"name": "randomFrame",
+					"title" : "Random frame?",
+					"tooltip": "Should the flames spawn with a random frame? Doesn't do anything if the NPC only has one frame.",
+					"value-default": false
+				},
+				{
+					"control": "checkBox",
+					"name": "animatePaused",
+					"title" : "Animate while paused?",
+					"tooltip": "Should the flames animate while the game is paused?",
+					"value-default": false
+				},
+				{
+					"control": "checkBox",
+					"name": "rotatePaused",
+					"title" : "Rotate while paused?",
+					"tooltip": "Should the flames rotate while the game is paused?",
+					"value-default": false
+				}
+			]
+		}
+	]
+}

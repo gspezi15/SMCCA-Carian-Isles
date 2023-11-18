@@ -1,0 +1,16 @@
+{
+	"style" : "groupbox",
+	"title" : "Spikeball Launcher Settings",
+	"layout": [
+		{
+			"control": "spinBox",
+			"name": "frequency",
+			"type": "int",
+			"title": "Spikeball Interval",
+			"tooltip": "How long should the Spikeball Launcher wait before creating a Spikeball? In ticks. 64 is ~1 second.",
+			"value-default": 256,
+			"value-min": 1,
+			"value-max": 1200
+		}
+	]
+}
