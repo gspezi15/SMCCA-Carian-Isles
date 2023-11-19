@@ -6,7 +6,7 @@ SC:0;L:-200000;R:-184928;T:-200600;B:-200000;MZ:24;MF:"Channel Ship Armada.ogg";
 SC:1;L:-180000;R:-168864;T:-180600;B:-180000;MZ:24;MF:"Channel Ship Armada.ogg";BG:17;
 SC:2;L:-160000;R:-159200;T:-160600;B:-160000;MZ:24;MF:"Before Boss.mp3";BG:0;
 SC:3;L:-140000;R:-139200;T:-140600;B:-140000;MZ:24;MF:"BossMusic/miniboss.ogg";BG:17;
-SC:4;L:-120192;R:-118496;T:-120600;B:-120000;MZ:24;MF:"Channel Armada/Klomp's Romp (ambience loop).ogg";BG:5;
+SC:4;L:-120192;R:-118496;T:-120600;B:-120000;MZ:24;MF:"ch2ep1-1 - Channel Armada/Klomp's Romp (ambience loop).ogg";BG:5;
 SECTION_END
 STARTPOINT
 ID:1;X:-199820;Y:-200278;D:1;
