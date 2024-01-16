@@ -1,0 +1,12 @@
+[cloudstile]
+img="cloudstile.png"
+depth=600
+repeatX=true
+repeatY=true
+alignY=BOTTOM
+speedX=-0.2
+
+[gradient]
+img="gradient.png"
+depth=INFINITE
+alignY=BOTTOM

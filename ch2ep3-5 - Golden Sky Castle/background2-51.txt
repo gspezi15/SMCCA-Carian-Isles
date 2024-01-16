@@ -1,0 +1,55 @@
+fill-color=0x787888
+
+[Layer 1]
+depth=400
+img="gradient.png"
+repeatX=true
+repeatY=false
+speedX=0.2
+alignX=LEFT
+alignY=BOTTOM
+parallaxX=0.1
+parallaxY=1
+
+[Layer 2]
+depth=250
+img="cloudstile.png"
+repeatX=true
+repeatY=false
+speedX=0.4
+alignX=LEFT
+alignY=BOTTOM
+parallaxX=0.2
+parallaxY=1
+
+[Layer 3]
+depth=200
+img="backclouds.png"
+repeatX=true
+repeatY=false
+speedX=0.6
+alignX=LEFT
+alignY=BOTTOM
+parallaxX=0.3
+parallaxY=1
+
+[Layer 4]
+depth=150
+img="foreclouds.png"
+repeatX=true
+repeatY=false
+speedX=0.8
+alignX=LEFT
+alignY=BOTTOM
+parallaxX=0.4
+parallaxY=1
+
+[Layer 5]
+depth=125
+img="bg2_51_layer0.png"
+repeatX=true
+repeatY=false
+alignX=LEFT
+alignY=BOTTOM
+parallaxX=0.5
+parallaxY=1

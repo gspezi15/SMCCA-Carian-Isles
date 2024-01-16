@@ -1,0 +1,12 @@
+[gradient]
+img="gradient.png"
+depth=800
+repeatX=true
+alignY=BOTTOM
+
+[backClouds]
+img="backClouds.png"
+depth=600
+repeatX=true
+alignY=BOTTOM
+speedX=-0.2
