@@ -5,6 +5,7 @@ SECTION
 SC:0;L:-200000;R:-185664;T:-200600;B:-200000;MZ:24;MF:"North Carian Floodplain.ogg";BG:5;
 SC:1;L:-180000;R:-164128;T:-180600;B:-180000;MZ:24;MF:"North Carian Floodplain.ogg";BG:11;
 SC:2;L:-160544;R:-158752;T:-160600;B:-160000;MZ:24;MF:"Northern Foothills.ogg";BG:32;
+SC:3;L:-140000;R:-139200;T:-140600;B:-140000;MZ:0;MF:"";BG:0;
 SC:10;L:0;R:800;T:-600;B:0;MZ:0;MF:"";BG:0;
 SECTION_END
 STARTPOINT
@@ -6692,7 +6693,7 @@ ID:508;X:-191280;Y:-200288;D:-1;
 ID:508;X:-191024;Y:-200448;D:-1;
 ID:430;X:-179328;Y:-180224;D:-1;
 ID:1;X:-178288;Y:-180192;D:-1;GE:1;GT:1;GD:1;GM:20;
-ID:94;X:-178944;Y:-180214;D:-1;MG:"These are the Floodplain Forests\, lush woodlands nourished by floods. With Mimic Octo gone\, these forests are at their greenest.";FD:1;
+ID:94;X:-178944;Y:-180214;D:-1;MG:"These are the Floodplain Forests\, lush woodlands nourished by floods. With Polpa gone\, these forests are at their greenest.";FD:1;
 ID:76;X:-177104;Y:-180384;D:-1;S1:1;GE:1;GT:1;GD:3;GM:20;
 ID:230;X:-159552;Y:-160128;D:-1;S1:1;NM:1;
 ID:197;X:-159248;Y:-160416;D:-1;
