@@ -1,0 +1,6 @@
+image = background-895.png
+name = Medieval Roof Left Intersection
+frames = 1
+framespeed = 8
+noshadows = false
+priority = -85

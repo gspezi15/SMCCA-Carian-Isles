@@ -1,0 +1,6 @@
+image = background-855.png
+name = Bricks 4
+frames = 1
+framespeed = 8
+noshadows = false
+priority = -85

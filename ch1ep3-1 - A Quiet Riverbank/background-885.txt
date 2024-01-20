@@ -1,0 +1,6 @@
+image = background-885.png
+name = Medieval Frame 18
+frames = 1
+framespeed = 8
+noshadows = false
+priority = -85

@@ -1,0 +1,6 @@
+image = background-890.png
+name = Emerald Banner (Small)
+frames = 1
+framespeed = 8
+noshadows = false
+priority = -85

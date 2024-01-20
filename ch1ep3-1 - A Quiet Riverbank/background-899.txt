@@ -1,0 +1,6 @@
+image = background-899.png
+name = Shuttered Window Closed
+frames = 1
+framespeed = 8
+noshadows = false
+priority = -85

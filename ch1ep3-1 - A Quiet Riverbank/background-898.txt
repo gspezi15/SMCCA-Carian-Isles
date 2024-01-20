@@ -1,0 +1,6 @@
+image = background-898.png
+name = Unshuttered Window
+frames = 1
+framespeed = 8
+noshadows = false
+priority = -85
