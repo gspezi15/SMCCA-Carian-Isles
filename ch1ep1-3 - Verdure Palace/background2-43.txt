@@ -1,0 +1,20 @@
+[montana]
+img="clouds.png"
+depth=600
+repeatX=true
+repeatY=true
+alignY=BOTTOM
+speedX= -0.5
+speedY= -0.15
+
+[crags]
+img="4NMountains.png"
+depth=300
+repeatX=true
+alignY=BOTTOM
+
+[fort]
+img="background2-43.png"
+depth=200
+repeatX=true
+alignY=BOTTOM
