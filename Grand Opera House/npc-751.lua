@@ -18,14 +18,14 @@ local deathEffectID = (npcID)
 local bigBooBossSettings = {
 	id = npcID,
 	
-	gfxwidth = 144,
-	gfxheight = 128,
+	gfxwidth = 96,
+	gfxheight = 96,
 
 	gfxoffsetx = 0,
 	gfxoffsety = 8,
 	
-	width = 112,
-	height = 112,
+	width = 54,
+	height = 80,
 	
 	frames = 11,
 	framestyle = 1,
