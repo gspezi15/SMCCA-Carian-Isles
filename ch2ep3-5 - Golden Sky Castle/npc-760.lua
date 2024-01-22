@@ -1,6 +1,8 @@
 --NPCManager is required for setting basic NPC properties
 local npcManager = require("npcManager")
-
+local npcutils = require("npcs/npcutils")
+local klonoa = require("characters/klonoa")
+klonoa.UngrabableNPCs[NPC_ID] = true
 --Create the library table
 local Froggaus = {}
 --NPC_ID is dynamic based on the name of the library file
@@ -10,16 +12,16 @@ local id = NPC_ID
 local FroggausSettings = {
 	id = npcID,
 	--Sprite size
-	gfxheight = 96,
-	gfxwidth = 96,
+	gfxheight = 128,
+	gfxwidth = 128,
 	--Hitbox size. Bottom-center-bound to sprite size.
-	width = 86,
-	height = 84,
+	width = 64,
+	height = 58,
 	--Sprite offset from hitbox for adjusting hitbox anchor on sprite.
 	gfxoffsetx = 0,
-	gfxoffsety = 8,
+	gfxoffsety = 38,
 	--Frameloop-related
-	frames = 1,
+	frames = 19,
 	framestyle = 0,
 	framespeed = 8, --# frames between frame change
 	--Movement speed. Only affects speedX by default.
@@ -46,35 +48,14 @@ local FroggausSettings = {
 	grabside=false,
 	grabtop=false,
 
-	--Identity-related flags. Apply various vanilla AI based on the flag:
-	--iswalker = false,
-	--isbot = false,
-	--isvegetable = false,
-	--isshoe = false,
-	--isyoshi = false,
-	--isinteractable = false,
-	--iscoin = false,
-	--isvine = false,
-	--iscollectablegoal = false,
-	--isflying = false,
-	--iswaternpc = false,
-	--isshell = false,
-
-	--Emits light if the Darkness feature is active:
-	--lightradius = 100,
-	--lightbrightness = 1,
-	--lightoffsetx = 0,
-	--lightoffsety = 0,
-	--lightcolor = Color.white,
-
 	--Define custom properties below
-	hp = 60,
-	idletime = 75,
-	bubbleID = id + 1,
+	hp = 45,
+	bubble1ID = id + 1,
+	bubble2ID = id + 2,
+	shockwaveID = id + 3,
 	idletime = 180,
-	jumpheight1 = -12,
-	jumpheight2 = -14,
-	effect = id,
+	jumpheight1 = -10,
+	jumpheight2 = -12,
 }
 
 --Applies NPC settings
@@ -97,7 +78,7 @@ npcManager.registerHarmTypes(npcID,
 	{
 		--[HARM_TYPE_JUMP]=10,
 		--[HARM_TYPE_FROMBELOW]=10,
-		--[HARM_TYPE_NPC]=10,
+		[HARM_TYPE_NPC]=63,
 		--[HARM_TYPE_PROJECTILE_USED]=10,
 		[HARM_TYPE_LAVA]={id=13, xoffset=0.5, xoffsetBack = 0, yoffset=1, yoffsetBack = 1.5},
 		--[HARM_TYPE_HELD]=10,
@@ -112,10 +93,14 @@ npcManager.registerHarmTypes(npcID,
 local STATE_IDLE = 1
 local STATE_JUMP1 = 2
 local STATE_JUMP2 = 3
-local STATE_BUBBLE = 4
-local STATE_HURT = 5
-local speed = 0
-local setHP = NPC.config[id].hp
+local STATE_BUBBLE1 = 4
+local STATE_BUBBLE2 = 5
+local STATE_BUBBLE3 = 6
+local STATE_HURT = 7
+local STATE_KILL = 8
+
+local sfx_killed = Misc.resolveFile("FroggausSounds/bomb explode.wav")
+
 --Register events
 function Froggaus.onInitAPI()
 	npcManager.registerEvent(npcID, Froggaus, "onTickNPC")
@@ -144,199 +129,181 @@ function Froggaus.onTickEndNPC(v)
 
 		--Initialize necessary data.
 		data.initialized = true
-		v.stateTimer = 0
-		v.HITTABLE = true
-		v.phase2 = false
-		v.phase3 = false
-		v.harmframe = 0
-		v.harmtimer = 120
-		v.invisibleharm = false
-		v.harmed = false
-		v.hp = NPC.config[id].hp
-		v.consecutive = 0
-		v.STATE = STATE_IDLE
+		data.timer = 0
+		data.phase = 0
+		data.harmframe = 0
+		data.harmtimer = 120
+		data.invisibleharm = false
+		data.harmed = false
+		data.fallSFX = false
+		data.SFXTick = 0
+		data.health = NPC.config[id].hp
+		data.consecutive = 0
+		data.state = STATE_IDLE
 	end
 
-	if v.STATE == STATE_IDLE then
-		v.stateTimer = v.stateTimer + 1
-		v.HITTABLE = true
-		if (v.x + v.width / 2) > (p.x + p.width / 2) then
-			v.direction = -1
+		--Depending on the NPC, these checks must be handled differently
+	if v:mem(0x12C, FIELD_WORD) > 0    --Grabbed
+	or v:mem(0x136, FIELD_BOOL)        --Thrown
+	or v:mem(0x138, FIELD_WORD) > 0    --Contained within
+	then
+		--Handling
+		data.state = STATE_IDLE
+		data.timer = 0
+		return
+	end
+	data.timer = data.timer + 1
+	if data.state == STATE_IDLE then
+		npcutils.faceNearestPlayer(v)
+		if data.timer < config.idletime - 8 then
+			v.animationFrame = math.floor(lunatime.tick() / 10) % 2
 		else
-			v.direction = 1
+			v.animationFrame = 2
 		end
-		if v.direction == -1 then
-			v.animationFrame = math.floor(lunatime.tick() / 6) % 3
-		elseif v.direction == 1 then
-			v.animationFrame = math.floor(lunatime.tick() / 6) % 3
-		end
-		if v.stateTimer == config.idletime then
-			v.stateTimer = 0
-			if v.phase2 == false then
-				v.STATE = STATE_JUMP1
-			elseif v.phase2 == true then
-				v.STATE = STATE_JUMP2
+		if data.timer >= config.idletime then
+			data.timer = 0
+			if data.phase == 0 then
+				data.state = STATE_JUMP1
+			else
+				data.state = STATE_JUMP2
 			end
 		end
-	end
-
-	if v.STATE == STATE_HURT then
-		v.stateTimer = v.stateTimer - 1
-		if v.stateTimer >= 0 then
-			v.stateTimer = 0
+	elseif data.state == STATE_HURT then
+		v.animationFrame = math.floor(lunatime.tick() / 8) % 3 + 16
+		if data.timer == 1 then
+			v.speedX = 0
+			v.speedY = 2
+			SFX.play("FroggausSounds/boss hit.wav")
 		end
-		v.animationFrame = math.floor(lunatime.tick() / 6) % 2 + 10
-		if v.stateTimer <= -45 then
-			v.stateTimer = 0
-			if v.phase2 == false then
-				v.STATE = STATE_JUMP1
-			elseif v.phase2 == true then
-				v.STATE = STATE_JUMP2
-			end
+		if data.timer >= 45 then
+			data.timer = config.idletime
+			data.state = STATE_IDLE
+			data.consecutive = 0
+			data.SFXTick = 0
+			data.fallSFX = false
+			v.ai1 = 0
 		end
-		v.HITTABLE = false
-	end
-
-
-	if v.STATE == STATE_JUMP1 then
-		v.stateTimer = v.stateTimer + 1
-		v.HITTABLE = false
-		if v.stateTimer == 10 and v.collidesBlockBottom then
+	elseif data.state == STATE_JUMP1 then
+		if data.timer < 10 and not v.collidesBlockBottom then data.timer = 0 end
+		if data.timer == 10 and v.collidesBlockBottom then
 			v.speedY = config.jumpheight1
-			speed = 2.5
-			SFX.play(1)
+			SFX.play("FroggausSounds/bounce.wav")
+			npcutils.faceNearestPlayer(v)
 		end
-		if v.stateTimer <= 10 then
-			if v.direction == -1 then
-				v.animationFrame = math.floor(lunatime.tick() / 6) % 1 + 3
-			elseif v.direction == 1 then
-				v.animationFrame = math.floor(lunatime.tick() / 6) % 1 + 3
-			end
-		end
-		if (v.x + v.width / 2) > (p.x + p.width / 2) then
-			v.direction = -1
-		else
-			v.direction = 1
-		end
-		if v.stateTimer >= 10 then
-			v.speedX = speed * v.direction
-			if v.direction == -1 then
-				v.animationFrame = math.floor(lunatime.tick() / 6) % 1 + 5
-			elseif v.direction == 1 then
-				v.animationFrame = math.floor(lunatime.tick() / 6) % 1 + 5
-			end
-		end
-		if v.stateTimer >= 15 and v.collidesBlockBottom then
-			v.stateTimer = 0
-			v.speedX = 0
-			v.consecutive = v.consecutive + 1
-		end
-		if v.consecutive == 3 then
-			v.consecutive = 0
-			v.stateTimer = 0
-			v.STATE = STATE_IDLE
-		end
-	end
 
-	if v.STATE == STATE_JUMP2 then
-		v.stateTimer = v.stateTimer + 1
-		v.HITTABLE = false
-		if v.stateTimer == 10 and v.collidesBlockBottom then
-			v.speedY = config.jumpheight2
-			speed = 7
-			SFX.play(1)
+		if data.timer > 10 then
+			v.speedX = 2 * v.direction
 		end
-		if v.stateTimer <= 10 then
-			if v.direction == -1 then
-				v.animationFrame = math.floor(lunatime.tick() / 6) % 1 + 3
-			elseif v.direction == 1 then
-				v.animationFrame = math.floor(lunatime.tick() / 6) % 1 + 3
-			end
+		if data.timer >= 15 and v.collidesBlockBottom then
+			data.timer = 0
+			v.speedX = 0
+			data.consecutive = data.consecutive + 1
 		end
-		if (v.x + v.width / 2) > (p.x + p.width / 2) then
-			v.direction = -1
+		if data.consecutive == 3 then
+			data.consecutive = 0
+			data.timer = 0
+			data.state = STATE_IDLE
+		end
+		if data.timer < 10 then
+			v.animationFrame = 9
 		else
-			v.direction = 1
+			v.animationFrame = 10
 		end
-		if v.stateTimer >= 10 and v.stateTimer <= 75 then
-			v.speedX = speed * v.direction
-			if v.direction == -1 then
-				v.animationFrame = math.floor(lunatime.tick() / 6) % 1 + 5
-			elseif v.direction == 1 then
-				v.animationFrame = math.floor(lunatime.tick() / 6) % 1 + 5
+	elseif data.state == STATE_JUMP2 then
+		if data.timer < 32 and not v.collidesBlockBottom then data.timer = 0 end
+
+
+		if data.timer < 32 then
+			v.animationFrame = 9
+		elseif data.timer < 40 then
+			v.animationFrame = 10
+		elseif data.timer < 48 then
+			v.animationFrame = 11
+		elseif data.timer < 56 then
+			v.animationFrame = 12
+		elseif data.timer < 64 then
+			v.animationFrame = 13
+		else
+			if v.speedY <= 0 then
+				v.animationFrame = math.floor(lunatime.tick() / 8) % 2 + 14
+			else
+				v.animationFrame = math.floor(lunatime.tick() / 6) % 2 + 3
+				v.speedY = 6
+				data.fallSFX = true
 			end
+			v.speedX = v.speedX * 0.9
 		end
-		if v.stateTimer == 90 then
-			v.speedY = 11
+		if data.fallSFX == true and data.SFXTick == 0 then
+			data.SFXTick = 1
+			SFX.play("FroggausSounds/fall.wav")
+		end
+		if data.timer == 32 and v.collidesBlockBottom then
+			local bombxspeed = vector.v2(Player.getNearest(v.x + v.width/2, v.y + v.height).x + 0.5 * Player.getNearest(v.x + v.width/2, v.y + v.height).width - (v.x + 0.5 * v.width))
+			v.speedX = bombxspeed.x / 40
+			if v.speedX > 10 then v.speedX = 10 end
+			if v.speedX < -10 then v.speedX = -10 end
+			v.speedY = config.jumpheight2
+			SFX.play("FroggausSounds/bounce.wav")
+		end
+
+		if data.timer >= 33 and v.collidesBlockBottom then
+			if data.phase == 1 then data.timer = 0 data.consecutive = data.consecutive + 1 end
 			v.speedX = 0
-		end
-		if v.stateTimer >= 75 then
-			if v.direction == -1 then
-				v.animationFrame = math.floor(lunatime.tick() / 6) % 1 + 6
-			elseif v.direction == 1 then
-				v.animationFrame = math.floor(lunatime.tick() / 6) % 1 + 6
-			end
-		end
-		if v.stateTimer >= 15 and v.collidesBlockBottom then
-			v.stateTimer = 0
-			v.speedX = 0
+			data.SFXTick = 0
+			data.fallSFX = false
 			defines.earthquake = 10
-			v.consecutive = v.consecutive + 1
-			SFX.play(37)
-			local shockwave1 = NPC.spawn(202, v.x, v.y + 32, v.section)
-			local shockwave2 = NPC.spawn(202, v.x, v.y + 32, v.section)
+			SFX.play("FroggausSounds/ram.wav")
+			local shockwave1 = NPC.spawn(config.shockwaveID, v.x + v.width/2 - NPC.config[config.shockwaveID].width/2, v.y + v.height*2/3 - NPC.config[config.shockwaveID].height/2)
+			local shockwave2 = NPC.spawn(config.shockwaveID, v.x + v.width/2 - NPC.config[config.shockwaveID].width/2, v.y + v.height*2/3 - NPC.config[config.shockwaveID].height/2)
 			shockwave1.friendly = v.friendly
 			shockwave1.layerName = "Spawned NPCs"
 			shockwave2.friendly = v.friendly
 			shockwave2.layerName = "Spawned NPCs"
 			shockwave1.speedX = 6
-			shockwave1.speedY = -4
 			shockwave2.speedX = -6
-			shockwave2.speedY = -4
 		end
-		if v.consecutive == 3 then
-			v.consecutive = 0
-			v.stateTimer = 0
-			if v.phase3 == true then
-				v.STATE = STATE_BUBBLE
-			elseif v.phase3 == false then
-				v.STATE = STATE_IDLE
+		if (data.phase == 1 and data.consecutive == 3) or (data.phase == 2 and data.timer >= 33 and v.collidesBlockBottom) then
+			if data.phase == 1 then data.consecutive = 0 end
+			data.timer = 0
+			if data.phase == 2 then data.consecutive = data.consecutive + 1 end
+			if data.phase == 2 then
+				if data.consecutive <= 2 then
+					data.state = RNG.irandomEntry{STATE_BUBBLE1,STATE_BUBBLE2}
+				else
+					data.state = STATE_IDLE
+				end
+			else
+				data.state = STATE_IDLE
 			end
 		end
-	end
-
-	if v.harmed == true then
-		v.harmtimer = v.harmtimer - 1
-		v.harmframe = v.harmframe + 1
-		if v.harmframe == 4 then
-			v.harmframe = 0
-		end
-		if v.harmframe > 2 then
-			v.invisibleharm = true
+	elseif data.state == STATE_BUBBLE1 then
+		if data.timer < 6 then
+			v.animationFrame = 1
+		elseif data.timer < 12 then
+			v.animationFrame = 0
+		elseif data.timer < 18 then
+			v.animationFrame = 5
+		elseif data.timer < 24 then
+			v.animationFrame = 6
+		elseif data.timer < 30 then
+			v.animationFrame = 5
+		elseif data.timer < 52 then
+			v.animationFrame = 1
+		elseif data.timer < 56 then
+			v.animationFrame = 0
+		elseif data.timer < 60 then
+			v.animationFrame = 5
+		elseif data.timer < 64 then
+			v.animationFrame = 6
+		elseif data.timer < 68 then
+			v.animationFrame = 5
+		elseif data.timer < 72 then
+			v.animationFrame = 7
 		else
-			v.invisibleharm = false
+			v.animationFrame = 8
 		end
-		if v.harmtimer == 0 then
-			v.harmtimer = 120
-			v.harmframe = 0
-			v.harmed = false
-		end
-	end
-
-	if v.invisibleharm == true then
-		v.animationFrame = -999
-	end
-
-	if v.STATE == STATE_BUBBLE then
-		v.stateTimer = v.stateTimer + 1
-		if v.stateTimer <= 20 then
-			v.animationFrame = math.floor(lunatime.tick() / 6) % 1 + 7
-		end
-		if v.stateTimer >= 20 then
-			v.animationFrame = math.floor(lunatime.tick() / 6) % 2 + 8
-		end
-		if v.stateTimer >= 65 then
-			local bubble = NPC.spawn(config.bubbleID, v.x, v.y + 32, v.section)
+		if data.timer == 72 then
+			local bubble = NPC.spawn(config.bubble1ID, v.x + v.width/2 - NPC.config[config.bubble1ID].width/2, v.y + v.height/2 - NPC.config[config.bubble1ID].width/2)
 			local p = Player.getNearest(v.x + v.width / 2, v.y + v.height / 2)
 								
 			local startX = p.x + p.width / 2
@@ -346,72 +313,217 @@ function Froggaus.onTickEndNPC(v)
 						
 			local angle = math.atan2((Y - startY), (X - startX))
 
-			bubble.speedX = -3 * math.cos(angle)
-			bubble.speedY = -3 * math.sin(angle)
+			bubble.speedX = -3.5 * math.cos(angle)
+			bubble.speedY = -3.5 * math.sin(angle)
 			bubble.friendly = v.friendly
 			bubble.layerName = "Spawned NPCs"
-			v.consecutive = v.consecutive + 1
-			v.stateTimer = 20
 			SFX.play(38)
 		end
-		if v.stateTimer == 20 and v.consecutive == 4 then
-			v.stateTimer = 0
-			v.consecutive = 0
-			v.STATE = STATE_IDLE
+		if data.timer >= 80 then
+			if v.ai1 >= 3 then
+				data.timer = 0
+				v.ai1 = 0
+				data.state = STATE_JUMP2
+			else
+				v.ai1 = v.ai1 + 1
+				data.timer = 48
+			end
 		end
+	elseif data.state == STATE_BUBBLE2 then
+		if data.timer < 6 then
+			v.animationFrame = 1
+		elseif data.timer < 12 then
+			v.animationFrame = 0
+		elseif data.timer < 18 then
+			v.animationFrame = 7
+		elseif data.timer < 24 then
+			v.animationFrame = 8
+		elseif data.timer < 30 then
+			v.animationFrame = 7
+		elseif data.timer < 52 then
+			v.animationFrame = 1
+		elseif data.timer < 56 then
+			v.animationFrame = 0
+		elseif data.timer < 60 then
+			v.animationFrame = 5
+		elseif data.timer < 64 then
+			v.animationFrame = 6
+		elseif data.timer < 68 then
+			v.animationFrame = 5
+		elseif data.timer < 72 then
+			v.animationFrame = 7
+		else
+			v.animationFrame = 8
+		end
+		if data.timer == 72 then
+			SFX.play(62)
+		end
+		if data.timer >= 72 then npcutils.faceNearestPlayer(v) end
+		local direct = 1.5
+		if data.timer >= 72 and data.timer % 4 == 0 then
+			local bubble = NPC.spawn(config.bubble2ID, v.x + v.width/2 - NPC.config[config.bubble1ID].width/2, v.y + v.height/2 - NPC.config[config.bubble1ID].width/2)
+			direct = direct + 2
+			bubble.speedX = (direct + RNG.randomInt(-0.75,0.75)) * v.direction
+			bubble.speedY = -13 - RNG.randomInt(-0.75,0.75)
+			bubble.friendly = v.friendly
+			bubble.layerName = "Spawned NPCs"
+		end
+		if data.timer >= 210 then
+			data.state = STATE_JUMP2
+			data.timer = 0
+		end
+	elseif data.state == STATE_KILL then
+		v.speedX = 0
+		v.friendly = true
+		v.nohurt = true
+		v.nogravity = true
+		v.speedY = 0
+		v.animationFrame = math.floor(lunatime.tick() / 8) % 3 + 16
+		if data.timer % 24 == 0 then
+            SFX.play(sfx_killed, 1)
+            Animation.spawn(63, math.random(v.x, v.x + v.width), math.random(v.y, v.y + v.height))
+        end
+        if data.timer >= 240 then
+            v:kill(HARM_TYPE_NPC)
+			if v.legacyBoss then
+				local ball = NPC.spawn(16, v.x, v.y)
+				ball.x = ball.x + ((v.width - ball.width) / 2)
+				ball.y = ball.y + ((v.height - ball.height) / 2)
+				ball.speedY = -6
+				ball.despawnTimer = 100
+				
+				SFX.play(20)
+			end
+        end
 	end
 
+		
+	if v.animationFrame >= 0 then
+		-- animation controlling
+		v.animationFrame = npcutils.getFrameByFramestyle(v, {
+			frame = data.frame,
+			frames = config.frames
+		});
+	end
+	
+	--Prevent Froggaus from turning around when he hits NPCs because they make him get stuck
+	if v:mem(0x120, FIELD_BOOL) then
+		v:mem(0x120, FIELD_BOOL, false)
+	end
 
-	--Depending on the NPC, these checks must be handled differently
-	if v:mem(0x12C, FIELD_WORD) > 0    --Grabbed
-	or v:mem(0x136, FIELD_BOOL)        --Thrown
-	or v:mem(0x138, FIELD_WORD) > 0    --Contained within
-	then
-		--Handling
+	if data.health > config.hp*2/3 and data.health <= config.hp then
+		data.phase = 0
+	elseif data.health > config.hp*1/3 and data.health <= config.hp*2/3 then
+		data.phase = 1
+	else
+		data.phase = 2
+	end
+	
+	if Colliders.collide(p, v) and not v.friendly and data.state ~= STATE_KILL and not Defines.cheat_donthurtme then
+		p:harm()
 	end
 end
 
 
-	function Froggaus.onNPCHarm(eventObj, v, killReason, culprit)
-		local data = v.data
-		if v.id ~= npcID then return end
-	
-		if killReason == HARM_TYPE_JUMP or HARM_TYPE_NPC or HARM_TYPE_PROJECTILE_USED or HARM_TYPE_SWORD or HARM_TYPE_HELD then
-			if v:mem(0x156,FIELD_WORD) == 0 and v.HITTABLE == true and v.harmed == false then
-				v.hp = v.hp - 10
-				v.harmed = true
-				SFX.play{
-					sound = "FroggausSounds/COI_Bosshit.wav"
-				}
-				v.STATE = STATE_HURT
+function Froggaus.onNPCHarm(eventObj, v, reason, culprit)
+	local data = v.data
+	if v.id ~= npcID then return end
+	if data.state ~= STATE_KILL then
+		if data.state == STATE_IDLE then
+			if reason ~= HARM_TYPE_LAVA then
+				if reason == HARM_TYPE_JUMP or killReason == HARM_TYPE_SPINJUMP or killReason == HARM_TYPE_FROMBELOW then
+					SFX.play(2)
+					data.state = STATE_HURT
+					data.timer = 0
+					data.health = data.health - 5
+				elseif reason == HARM_TYPE_SWORD then
+					if v:mem(0x156, FIELD_WORD) <= 0 then
+						data.health = data.health - 5
+						data.state = STATE_HURT
+						data.timer = 0
+						SFX.play(89)
+						v:mem(0x156, FIELD_WORD,20)
+					end
+					if Colliders.downSlash(player,v) then
+						player.speedY = -6
+					end
+				elseif reason == HARM_TYPE_NPC then
+					if culprit then
+						if type(culprit) == "NPC" then
+							if culprit.id == 13  then
+								SFX.play("Kirby Enemy Hit.wav")
+								data.health = data.health - 1
+							else
+								data.health = data.health - 5
+								data.state = STATE_HURT
+								data.timer = 0
+							end
+						else
+							data.health = data.health - 5
+							data.state = STATE_HURT
+							data.timer = 0
+						end
+					else
+						data.health = data.health - 5
+						data.state = STATE_HURT
+						data.timer = 0
+					end
+				elseif reason == HARM_TYPE_LAVA and v ~= nil then
+					v:kill(HARM_TYPE_OFFSCREEN)
+				elseif v:mem(0x12, FIELD_WORD) == 2 then
+					v:kill(HARM_TYPE_OFFSCREEN)
+				else
+					data.state = STATE_HURT
+					data.timer = 0
+					data.health = data.health - 5
+				end
+				if culprit then
+					if type(culprit) == "NPC" and (culprit.id ~= 195 and culprit.id ~= 50) and NPC.HITTABLE_MAP[culprit.id] then
+						culprit:kill(HARM_TYPE_NPC)
+					elseif culprit.__type == "Player" then
+						--Bit of code taken from the basegame chucks
+						if (culprit.x + 0.5 * culprit.width) < (v.x + v.width*0.5) then
+							culprit.speedX = -5
+						else
+							culprit.speedX = 5
+						end
+					elseif type(culprit) == "NPC" and (NPC.HITTABLE_MAP[culprit.id] or culprit.id == 45) and culprit.id ~= 50 and v:mem(0x138, FIELD_WORD) == 0 then
+						culprit:kill(HARM_TYPE_NPC)
+					end
+				end
+				if data.health <= 0 then
+					data.state = STATE_KILL
+					data.timer = 0
+					SFX.play("FroggausSounds/boss dies.wav")
+				elseif data.health > 0 then
+					v:mem(0x156,FIELD_WORD,60)
+				end
+			else
+				v:kill(HARM_TYPE_LAVA)
 			end
 		else
-			return
-		end
-		if v.hp < setHP * 2 / 3 + 1 then
-			v.phase2 = true
-		end
-		if v.hp < setHP / 3 + 1 then
-			v.phase3 = true
-		end
-		if v.hp == 0 then
-			local effect = Effect.spawn(760, v.x + 32, v.y + 32) 
-			effect.speedY = -6
-			SFX.play{
-				sound = "FroggausSounds/kirby_bossdead.wav"
-			}
-		end	
-		if v.hp > 0 then
-			eventObj.cancelled = true
-	
-			v:mem(0x156,FIELD_WORD,60)
-			
-			if (reason == HARM_TYPE_JUMP) and type(culrpit) == "Player" then
-				culrpit.speedX = math.sign((v.x + v.width*0.5) - (culprit.x + culprit.width*0.5)) * 8
-
+			if culprit then
+				if Colliders.collide(culprit, v) then
+					if culprit.y < v.y and culprit:mem(0x50, FIELD_BOOL) and player.deathTimer <= 0 then
+						SFX.play(2)
+						--Bit of code taken from the basegame chucks
+						if (culprit.x + 0.5 * culprit.width) < (v.x + v.width*0.5) then
+							culprit.speedX = -5
+						else
+							culprit.speedX = 5
+						end
+					else
+						culprit:harm()
+					end
+				end
+				if type(culprit) == "NPC" and (NPC.HITTABLE_MAP[culprit.id] or culprit.id == 45) and culprit.id ~= 50 and v:mem(0x138, FIELD_WORD) == 0 then
+					culprit:kill(HARM_TYPE_NPC)
+				end
 			end
 		end
 	end
+	eventObj.cancelled = true
+end
 
 --Gotta return the library table!
 return Froggaus
