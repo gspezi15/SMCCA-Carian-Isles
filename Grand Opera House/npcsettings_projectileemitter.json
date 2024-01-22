@@ -1,0 +1,134 @@
+{
+	"style" : "groupbox",
+	"title" : "Flame Emitter Settings",
+	"layout": [
+		{
+			"control": "spinBox",
+			"type": "double",
+			"name": "speedXMin",
+			"title": "Speed X Min",
+			"value-default": -3,
+			"value-min": -20,
+			"value-max": 20,
+			"single-step": 0.5
+		},
+		{
+			"control": "spinBox",
+			"type": "double",
+			"name": "speedXMax",
+			"title": "Speed X Max",
+			"value-default": 3,
+			"value-min": -20,
+			"value-max": 20,
+			"single-step": 0.5
+		},
+        {
+			"control": "spinBox",
+			"type": "double",
+			"name": "speedYMin",
+			"title": "Speed Y Min",
+			"value-default": -4,
+			"value-min": -20,
+			"value-max": 20,
+			"single-step": 0.5
+		},
+		{
+			"control": "spinBox",
+			"type": "double",
+			"name": "speedYMax",
+			"title": "Speed Y Max",
+			"value-default": -4,
+			"value-min": -20,
+			"value-max": 20,
+			"single-step": 0.5
+		},
+		{
+			"control": "combobox",
+			"name": "SFXSet",
+			"title": "How to produce SFX",
+			"elements": ["Play Each Interval", "Play Once"],
+			"value-default": 0
+		},
+		{
+			"control": "combobox",
+			"name": "FXSet",
+			"title": "How to produce Effects",
+			"elements": ["Play Each Interval", "Play Once"],
+			"value-default": 0
+		},
+        {
+			"control": "spinBox",
+			"type": "int",
+			"name": "emitid",
+			"title": "Spawn ID",
+			"value-default": 951,
+			"value-min": 1,
+			"value-max": 1000,
+			"single-step": 1
+		},
+        {
+			"control": "spinBox",
+			"type": "int",
+			"name": "emitTimer",
+			"title": "Delay While Emitting",
+			"value-default": 160,
+			"value-min": 1,
+			"value-max": 1000,
+			"single-step": 1
+		},
+        {
+			"control": "spinBox",
+			"type": "int",
+			"name": "waitTimer",
+			"title": "Delay Before Emitting",
+			"value-default": 135,
+			"value-min": 1,
+			"value-max": 1000,
+			"single-step": 1
+		},
+        {
+			"control": "spinBox",
+			"type": "int",
+			"name": "emittingInterval",
+			"title": "Spawn Interval",
+			"value-default": 4,
+			"value-min": 1,
+			"value-max": 1000,
+			"single-step": 1
+		},
+        {
+			"control": "spinBox",
+			"type": "int",
+			"name": "emitSFX",
+			"title": "Spawn SFX",
+			"value-default": 16,
+			"value-min": 0,
+			"value-max": 1000,
+			"single-step": 1
+		},
+        {
+			"control": "spinBox",
+			"type": "int",
+			"name": "emitFX",
+			"title": "Spawn Effect",
+			"value-default": 10,
+			"value-min": 0,
+			"value-max": 1000,
+			"single-step": 1
+		},
+		{
+			"control": "checkbox",
+			"name": "emitting",
+			"title": "Emit Already?",
+			"text-visible": true,
+			"value-default": false
+		},
+		{
+			"control": "checkbox",
+			"name": "throw",
+			"title": "Emitted NPCs harm others?",
+			"text-visible": true,
+			"value-default": false
+		}
+	]
+}

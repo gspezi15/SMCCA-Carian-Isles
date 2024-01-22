@@ -5,6 +5,7 @@ SECTION
 SC:0;L:-200000;R:-198528;T:-200600;B:-200000;MZ:24;MF:"Opera House.ogg";BG:44;
 SC:1;L:-180000;R:-179200;T:-180600;B:-180000;MZ:24;MF:"BossMusic/fantome1.ogg";BG:17;
 SC:2;L:-160000;R:-159200;T:-160600;B:-160000;MZ:0;MF:"";BG:0;
+SC:10;L:0;R:800;T:-600;B:0;MZ:0;MF:"";BG:0;
 SECTION_END
 STARTPOINT
 ID:1;X:-199788;Y:-200182;D:1;
@@ -702,9 +703,17 @@ ID:93;X:-179808;Y:-180512;
 ID:93;X:-179808;Y:-180544;
 ID:93;X:-179808;Y:-180576;
 ID:93;X:-179808;Y:-180608;
+ID:2;X:-179648;Y:-180160;
 BGO_END
 NPC
 ID:151;X:-199016;Y:-200176;D:-1;MG:"Fantome\: He is a very agile boss with the ability to call forth Phantos that linger briefly before poofing. His main weapon of choice is to summon minions to attack for him.";FD:1;
+ID:751;X:-179392;Y:-180416;D:-1;LR:"Phase1";ED:"Piano1";XTRA:"{\n    \"flyAroundHorizontalDistance\"\: 512\,\n    \"flyAroundHorizontalTime\"\: 480\,\n    \"flyAroundVerticalTime\"\: 320\,\n    \"health\"\: 3\,\n    \"throwProjectileID\"\: 370\,\n    \"throwProjectileSpeed\"\: 1\n}\n";
+ID:31;X:-179328;Y:-180128;D:-1;
+ID:800;X:-179616;Y:-180192;D:-1;LR:"Piano";XTRA:"{\n    \"emitTimer\"\: 240\,\n    \"emitid\"\: 210\,\n    \"speedXMax\"\: 2\,\n    \"speedXMin\"\: -2\,\n    \"waitTimer\"\: 160\n}\n";
+ID:751;X:-179392;Y:-180416;D:-1;LR:"Phase2";ED:"Piano2";XTRA:"{\n    \"flyAroundHorizontalDistance\"\: 512\,\n    \"flyAroundHorizontalTime\"\: 480\,\n    \"flyAroundVerticalTime\"\: 320\,\n    \"health\"\: 3\,\n    \"throwProjectileID\"\: 625\,\n    \"throwProjectileSpeed\"\: 1\n}\n";
+ID:800;X:-179616;Y:-180192;D:-1;LR:"Piano";XTRA:"{\n    \"emitTimer\"\: 180\,\n    \"emitid\"\: 210\,\n    \"emittingInterval\"\: 8\,\n    \"speedXMax\"\: 2\,\n    \"speedXMin\"\: -2\,\n    \"waitTimer\"\: 320\n}\n";
+ID:800;X:-179616;Y:-180192;D:-1;LR:"Piano";XTRA:"{\n    \"emitTimer\"\: 150\,\n    \"emitid\"\: 210\,\n    \"emittingInterval\"\: 8\,\n    \"speedXMax\"\: 2\,\n    \"speedXMin\"\: -2\,\n    \"waitTimer\"\: 320\n}\n";
+ID:800;X:-179616;Y:-180192;D:-1;LR:"Piano2";XTRA:"{\n    \"emitTimer\"\: 80\,\n    \"emitid\"\: 210\,\n    \"emittingInterval\"\: 8\,\n    \"speedXMax\"\: 2\,\n    \"speedXMin\"\: -2\,\n    \"waitTimer\"\: 320\n}\n";
 NPC_END
 DOORS
 IX:-198864;IY:-200160;OX:-179904;OY:-180128;DT:2;ID:1;OD:1;
@@ -713,9 +722,18 @@ LAYERS
 LR:"Default";
 LR:"Destroyed Blocks";HD:1;
 LR:"Spawned NPCs";
+LR:"Phase1";
+LR:"Piano";HD:1;
+LR:"Phase2";HD:1;
+LR:"Piano2";HD:1;
+LR:"test";
 LAYERS_END
 EVENTS_CLASSIC
 ET:"Level - Start";AS:0;AX:0;AY:0;
 ET:"P Switch - Start";AS:0;AX:0;AY:0;
 ET:"P Switch - End";AS:0;AX:0;AY:0;
+ET:"Piano1";LH:["Phase1","Spawned NPCs"];LS:["Piano"];TE:"Phase2";TD:150;AS:0;AX:0;AY:0;
+ET:"Phase2";LH:["Piano"];LS:["Phase2"];AS:0;AX:0;AY:0;
+ET:"Piano2";LS:["Piano2"];AS:0;AX:0;AY:0;
+ET:"test";LH:["test"];AS:0;AX:0;AY:0;
 EVENTS_CLASSIC_END
