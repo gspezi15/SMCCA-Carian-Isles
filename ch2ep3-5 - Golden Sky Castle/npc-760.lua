@@ -78,7 +78,7 @@ npcManager.registerHarmTypes(npcID,
 	{
 		--[HARM_TYPE_JUMP]=10,
 		--[HARM_TYPE_FROMBELOW]=10,
-		[HARM_TYPE_NPC]=63,
+		[HARM_TYPE_NPC]=850,
 		--[HARM_TYPE_PROJECTILE_USED]=10,
 		[HARM_TYPE_LAVA]={id=13, xoffset=0.5, xoffsetBack = 0, yoffset=1, yoffsetBack = 1.5},
 		--[HARM_TYPE_HELD]=10,
@@ -95,9 +95,8 @@ local STATE_JUMP1 = 2
 local STATE_JUMP2 = 3
 local STATE_BUBBLE1 = 4
 local STATE_BUBBLE2 = 5
-local STATE_BUBBLE3 = 6
-local STATE_HURT = 7
-local STATE_KILL = 8
+local STATE_HURT = 6
+local STATE_KILL = 7
 
 local sfx_killed = Misc.resolveFile("FroggausSounds/bomb explode.wav")
 
@@ -140,6 +139,7 @@ function Froggaus.onTickEndNPC(v)
 		data.health = NPC.config[id].hp
 		data.consecutive = 0
 		data.state = STATE_IDLE
+		data.direct = 5
 	end
 
 		--Depending on the NPC, these checks must be handled differently
@@ -162,6 +162,10 @@ function Froggaus.onTickEndNPC(v)
 		end
 		if data.timer >= config.idletime then
 			data.timer = 0
+			data.consecutive = 0
+			data.SFXTick = 0
+			data.fallSFX = false
+			v.ai1 = 0
 			if data.phase == 0 then
 				data.state = STATE_JUMP1
 			else
@@ -224,7 +228,7 @@ function Froggaus.onTickEndNPC(v)
 		elseif data.timer < 64 then
 			v.animationFrame = 13
 		else
-			if v.speedY <= 0 then
+			if v.speedY < 0 then
 				v.animationFrame = math.floor(lunatime.tick() / 8) % 2 + 14
 			else
 				v.animationFrame = math.floor(lunatime.tick() / 6) % 2 + 3
@@ -358,13 +362,13 @@ function Froggaus.onTickEndNPC(v)
 		if data.timer == 72 then
 			SFX.play(62)
 		end
+		if data.timer == 1 then data.direct = 5 end
 		if data.timer >= 72 then npcutils.faceNearestPlayer(v) end
-		local direct = 1.5
-		if data.timer >= 72 and data.timer % 4 == 0 then
+		if data.timer >= 72 and data.timer % 8 == 0 then
 			local bubble = NPC.spawn(config.bubble2ID, v.x + v.width/2 - NPC.config[config.bubble1ID].width/2, v.y + v.height/2 - NPC.config[config.bubble1ID].width/2)
-			direct = direct + 2
-			bubble.speedX = (direct + RNG.randomInt(-0.75,0.75)) * v.direction
-			bubble.speedY = -13 - RNG.randomInt(-0.75,0.75)
+			data.direct = data.direct - 0.2
+			bubble.speedX = (data.direct + RNG.random(-0.75,0.75)) * v.direction
+			bubble.speedY = -13 - RNG.random(-0.75,0.75)
 			bubble.friendly = v.friendly
 			bubble.layerName = "Spawned NPCs"
 		end
@@ -381,7 +385,7 @@ function Froggaus.onTickEndNPC(v)
 		v.animationFrame = math.floor(lunatime.tick() / 8) % 3 + 16
 		if data.timer % 24 == 0 then
             SFX.play(sfx_killed, 1)
-            Animation.spawn(63, math.random(v.x, v.x + v.width), math.random(v.y, v.y + v.height))
+            Animation.spawn(850, math.random(v.x, v.x + v.width), math.random(v.y, v.y + v.height))
         end
         if data.timer >= 240 then
             v:kill(HARM_TYPE_NPC)
@@ -451,7 +455,7 @@ function Froggaus.onNPCHarm(eventObj, v, reason, culprit)
 					if culprit then
 						if type(culprit) == "NPC" then
 							if culprit.id == 13  then
-								SFX.play("Kirby Enemy Hit.wav")
+								SFX.play(9)
 								data.health = data.health - 1
 							else
 								data.health = data.health - 5
