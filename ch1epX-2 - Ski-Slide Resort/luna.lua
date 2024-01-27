@@ -3,10 +3,10 @@ local respawnRooms = require("respawnRooms")
 
 --Change this in your lua file to have automatically appearing messages on section switch for specific sections:
 areaNames.sectionNames = {
-	[0] = "Reservoir Shore",
-        [1] = "Mont Gris Trail",
+	[0] = "Ski-Slide Peak",
+        [1] = "Rockfort Caverns Entrance",
 		[2] = "Mont Gris Peak",
-        [3] = "Rockfort Caverns Entrance",
+        [3] = "",
         [4] = "",
         [5] = "",
         [6] = "",
