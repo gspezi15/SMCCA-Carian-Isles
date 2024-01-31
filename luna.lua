@@ -1,3 +1,6 @@
+Player.setCostume(CHARACTER_LUIGI, "SMB3+SMW-Luigi", true)
+Player.setCostume(CHARACTER_MARIO, "SMB3+SMW-Mario", true)
+
 local areaNames = require("areaNames")
 local warpTransition = require ("warpTransition")
 local littleDialogue = require("littleDialogue")
