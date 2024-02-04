@@ -34,3 +34,4 @@ img="dam2.png"
 depth=100
 repeatX=true
 alignY=BOTTOM
+frames=4

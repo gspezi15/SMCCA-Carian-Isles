@@ -5234,7 +5234,6 @@ ID:10;X:-198014;Y:-200352;D:-1;
 ID:10;X:-197982;Y:-200320;D:-1;
 ID:753;X:-197472;Y:-200224;D:-1;XTRA:"{\n    \"platformCount\"\: 3\n}\n";
 ID:1;X:-196768;Y:-200256;D:-1;
-ID:245;X:-196560;Y:-200544;D:-1;
 ID:6;X:-196288;Y:-200480;D:-1;
 ID:10;X:-196318;Y:-200576;D:-1;
 ID:10;X:-196318;Y:-200544;D:-1;
@@ -5246,7 +5245,6 @@ ID:10;X:-196254;Y:-200576;D:-1;
 ID:10;X:-196286;Y:-200576;D:-1;
 ID:755;X:-195456;Y:-200256;D:-1;
 ID:1;X:-194656;Y:-200160;D:-1;
-ID:8;X:-194032;Y:-200368;D:-1;
 ID:476;X:-193776;Y:-200096;D:-1;XTRA:"{\n    \"activeByDefault\"\: 1\n}\n";
 ID:770;X:-197248;Y:-200032;D:-1;XTRA:"{\n    \"angle\"\: 270\,\n    \"createBubbles\"\: false\,\n    \"limit\"\: 10\,\n    \"power\"\: 4\n}\n";
 ID:350;X:-197664;Y:-200032;D:-1;XTRA:"{\n    \"useFixed\"\: true\n}\n";
@@ -5291,7 +5289,6 @@ ID:770;X:-191616;Y:-200064;D:-1;XTRA:"{\n    \"angle\"\: 270\,\n    \"createBubb
 ID:350;X:-192224;Y:-200032;D:-1;XTRA:"{\n    \"useFixed\"\: true\n}\n";
 ID:753;X:-191968;Y:-200224;D:-1;XTRA:"{\n    \"platformCount\"\: 3\,\n    \"rotationSpeed\"\: 1.5\n}\n";
 ID:476;X:-193184;Y:-200320;D:-1;
-ID:245;X:-192720;Y:-200544;D:-1;
 ID:94;X:-199488;Y:-200182;D:-1;MG:"<boxStyle ml>Be careful\, the  <color blue>currents are strong!</color> With no walkable trails leading directly to dam\, this is the only way there.";FD:1;
 ID:350;X:-191712;Y:-200032;D:-1;XTRA:"{\n    \"useFixed\"\: true\n}\n";
 ID:616;X:-191360;Y:-200464;D:-1;
@@ -5372,7 +5369,6 @@ ID:770;X:-185952;Y:-200064;D:-1;XTRA:"{\n    \"angle\"\: 270\,\n    \"createBubb
 ID:770;X:-185888;Y:-200032;D:-1;XTRA:"{\n    \"angle\"\: 270\,\n    \"createBubbles\"\: false\,\n    \"limit\"\: 10\,\n    \"power\"\: 4\n}\n";
 ID:770;X:-185888;Y:-200064;D:-1;XTRA:"{\n    \"angle\"\: 270\,\n    \"createBubbles\"\: false\,\n    \"limit\"\: 10\,\n    \"power\"\: 4\n}\n";
 ID:430;X:-159616;Y:-160288;D:-1;
-ID:800;X:-159072;Y:-160096;D:-1;
 ID:476;X:-158496;Y:-160224;D:-1;
 ID:230;X:-158752;Y:-160480;D:-1;S1:2;
 ID:230;X:-158688;Y:-160448;D:-1;S1:2;
@@ -5393,6 +5389,10 @@ ID:1;X:-152352;Y:-160256;D:-1;
 ID:616;X:-151488;Y:-160400;D:-1;
 ID:197;X:-139344;Y:-140416;D:-1;
 ID:753;X:-150624;Y:-160160;D:-1;XTRA:"{\n    \"platformWidth\"\: 2\n}\n";
+ID:516;X:-196560;Y:-200544;D:-1;
+ID:513;X:-194032;Y:-200384;D:-1;
+ID:516;X:-192720;Y:-200544;D:-1;
+ID:653;X:-159072;Y:-160064;D:-1;XTRA:"{\n    \"respawn\"\: true\n}\n";
 NPC_END
 PHYSICS
 ET:0;X:-200016;Y:-200064;W:14160;H:80;
