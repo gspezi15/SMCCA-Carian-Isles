@@ -1,0 +1,47 @@
+{
+	"style" : "groupbox",
+	"title" : "Bill Blaster Settings",
+	"layout": [
+		{
+			"control": "spinBox",
+			"type": "int",
+			"name": "delay",
+			"title": "Shoot Delay",
+			"tooltip": "The delay before firing an NPC.",
+			"value-default": 200,
+			"value-min": 0,
+			"value-max": 1000,
+			"single-step": 1
+		},
+		{
+			"control": "spinBox",
+			"type": "int",
+			"name": "amount",
+			"title": "Fire Amount",
+			"tooltip": "The amount of NPCs to shoot in a cycle.",
+			"value-default": 1,
+			"value-min": 1,
+			"value-max": 50,
+			"single-step": 1
+		},
+		{
+			"control": "spinBox",
+			"type": "int",
+			"name": "amountDelay",
+			"title": "Amount Delay",
+			"tooltip": "The delay between each shot of an NPC.",
+			"value-default": 64,
+			"value-min": 1,
+			"value-max": 1000,
+			"single-step": 1
+		},
+		{
+			"control": "checkbox",
+			"name": "alwaysfire",
+			"title": "Always Fire",
+			"tooltip": "Check to make the Blaster fire even when the player is right in front of it.",
+			"text-visible": true,
+			"value-default": false
+		}
+		]
+}
