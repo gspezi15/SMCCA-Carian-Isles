@@ -387,11 +387,11 @@ function Roy.onTickEndNPC(v)
 		SFX.play(22)
 		if v.direction == -1 then
 			Effect.spawn(10, v.x, v.y)
-			local bullet = NPC.spawn(757,v.x,v.y,player.section)
+			local bullet = NPC.spawn(695,v.x,v.y,player.section)
 			bullet.speedX = 5 * v.direction
 		elseif v.direction == 1 then
 			Effect.spawn(10, v.x + 64, v.y)
-			local bullet = NPC.spawn(757,v.x + 64,v.y,player.section)
+			local bullet = NPC.spawn(695,v.x + 64,v.y,player.section)
 			bullet.speedX = 5 * v.direction
 		end
 	end
