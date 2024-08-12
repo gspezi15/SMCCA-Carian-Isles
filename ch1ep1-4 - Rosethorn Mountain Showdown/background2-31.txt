@@ -16,7 +16,7 @@ speedX= -0.5
 speedY= -0.15
 
 [trees]
-img="brambles.png"
+img="brambles2.png"
 depth=150
 repeatX=true
 repeatY=true

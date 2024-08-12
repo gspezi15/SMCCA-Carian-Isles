@@ -21,7 +21,7 @@ repeatX=true
 alignY=BOTTOM
 
 [trees]
-img="brambles.png"
+img="brambles2.png"
 depth=150
 repeatX=true
 repeatY=true
